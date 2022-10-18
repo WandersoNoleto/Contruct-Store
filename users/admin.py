@@ -7,6 +7,9 @@ from .models import Users
 
 @admin.register(Users)
 class UserAmin(admin_auth.UserAdmin):
-    form = UserChangeForm
-    add_form = UserCreationForm
-    model = Users
+    form      = UserChangeForm
+    add_form  = UserCreationForm
+    model     = Users
+    fieldsets = admin_auth.UserAdmin.fieldsets + (
+        ('Cargo', {'fields': ('position',)}),
+    )

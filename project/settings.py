@@ -45,6 +45,10 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
+    'rolepermissions'
+]
+
+INSTALLED_APPS += [
     'users'
 ]
 
@@ -132,3 +136,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.Users'
+
+
+# Role permissions 
+
+ROLEPERMISSIONS_MODULE = 'project.roles'
