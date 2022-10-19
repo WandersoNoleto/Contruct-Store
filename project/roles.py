@@ -6,7 +6,8 @@ class Manager(AbstractUserRole):
     avaible_permissions = {
         'cadastrar_prodtos': True,
         'liberar_descontos': True,
-        'cadastrar_vendedor': True
+        'cadastrar_vendedor': True,
+        'excluir_vendedor': True
     }
 
 

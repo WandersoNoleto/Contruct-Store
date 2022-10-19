@@ -1,6 +1,6 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from rolepermissions.decorators import has_permission_decorator
 
@@ -10,7 +10,8 @@ from users.models import Users
 @has_permission_decorator('cadastrar_vendedor')
 def cadastrar_vendedor(request):
     if request.method == "GET":
-        return render(request, 'users/register_seller.html')
+        sellers = Users.objects.filter(position="V")
+        return render(request, 'users/register_seller.html', {'sellers': sellers})
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -47,3 +48,12 @@ def login(request):
 def logout(request):
     request.session.flush()
     return redirect(reverse('login'))
+
+@has_permission_decorator('excluir_vendedor')
+def remove_user(request, id):
+    seller = get_object_or_404(Users, id=id)
+    seller.delete()
+    
+    messages.add_message(request, messages.SUCCESS, 'Vendedor excluído com sucesso')
+
+    return redirect(reverse('cadastrar_vendedor'))
