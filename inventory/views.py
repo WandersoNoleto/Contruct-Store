@@ -4,14 +4,18 @@ from io import BytesIO
 
 from django.contrib import messages
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from PIL import Image as Image_pil
 from PIL import ImageDraw
+from rolepermissions.decorators import has_permission_decorator
 
+from inventory.forms import ProductForm
 from inventory.models import Category, Image, Product
 
 
+@has_permission_decorator('cadastrar_produtos')
 def add_product(request):
     if request.method == "GET":
         categories = Category.objects.all()
@@ -63,3 +67,16 @@ def add_product(request):
 
         messages.add_message(request, messages.SUCCESS, 'Produto cadastrado com sucesso')
         return redirect(reverse("add_product"))
+
+def show_product(request, slug):
+    if request.method == "GET":
+        product = Product.objects.get(slug=slug)
+        data = product.__dict__
+        data['category'] = product.category.id
+        form = ProductForm(initial=data)
+
+        context = {
+            'form': form
+        }
+
+        return render(request, 'product.html', context)

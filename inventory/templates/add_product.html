@@ -51,22 +51,25 @@
 
         <hr class="bg-hr">
         <div class="list-product">
-            {% for product in products %}
-                <div class="card" style="width: 18rem; background-color: #0f0f0f;">
-                    {% if product|get_first_image %}
-                        <img class="card-img-top" src="{{ product|get_first_image }}" alt="Imagem do Produto">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">
-                            <span class="badge badge-secondary">{{ product.category }}</span>
-                        </p>
-                        <a href="#" class="btn btn-primary">Acessar</a>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md">
+                        <div class="card" style="width: 18rem; background-color: #0f0f0f;">
+                            {% if product|get_first_image %}
+                                <img class="card-img-top" src="{{ product|get_first_image }}" alt="Imagem do Produto">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">
+                                    <span class="badge badge-secondary">{{ product.category }}</span>
+                                </p>
+                                <a href="{% url 'show_product' product.slug %}" class="btn btn-primary">Acessar</a>
+                            </div>
+                        </div>
+                        <br>
                     </div>
-                </div>
-                <br>
-            
-            {% endfor %}
+                {% endfor %}
+            </div>
 
         </div>
 
