@@ -11,8 +11,13 @@ from users.models import Users
 def cadastrar_vendedor(request):
     if request.method == "GET":
         sellers = Users.objects.filter(position="V")
+        
         return render(request, 'users/register_seller.html', {'sellers': sellers})
+
+
     if request.method == "POST":
+        name = request.POST.get('name')
+        last_name = request.POST.get('last-name')
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -22,7 +27,14 @@ def cadastrar_vendedor(request):
             # TODO: Utilizar Messages do Django
             return HttpResponse("Email já existe")
 
-        user = Users.objects.create_user(username=email, email=email, password=password, position="V")
+        user = Users.objects.create_user(
+            first_name = name, 
+            last_name = last_name, 
+            username  = email, 
+            email     = email, 
+            password  = password, 
+            position  = "V"
+            )
 
         #TODO: Redirecionar com uma mensagem
         return HttpResponse('Conta criada')
@@ -31,7 +43,9 @@ def login(request):
     if request.method == "GET":
         if request.user.is_authenticated:
             return redirect(reverse('plataforma'))
+
         return render(request, 'users/login.html')
+    
     elif request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -47,6 +61,7 @@ def login(request):
 
 def logout(request):
     request.session.flush()
+
     return redirect(reverse('login'))
 
 @has_permission_decorator('excluir_vendedor')

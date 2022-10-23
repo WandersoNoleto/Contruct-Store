@@ -12,7 +12,10 @@
         {% endif %}
         <form action="{% url 'cadastrar_vendedor' %}" method="POST">
             {% csrf_token %}
-
+            <label for="">Nome</label>
+            <input type="text" placeholder="Digite seu nome" name="name" class="form-control">
+            <label for="">Sobrenome</label>
+            <input type="text" placeholder="Digite seu sobrenome" name="last-name" class="form-control">
             <br>
             <label for="">E-mail</label>
             <input type="email" placeholder="Digite seu email" name="email" class="form-control">
@@ -20,7 +23,7 @@
             <label for="">Senha</label>
             <input type="password" placeholder="Digite seu senha" name="passowrd" class="form-control">
             <br>
-
+            
             <div class="mr-1 text-right">
                 <input type="submit" value="Enviar" class="btn btn-success ">
             </div>
@@ -51,7 +54,7 @@
                     <td>{% if seller.last_login != None %}{{ seller.last_login }}
                         {% else %} Sem registro de login
                         {% endif %}
-                    <td><a href="{% url 'remove-user' seller.id %}" class="btn btn-danger">Excluir</a></td>
+                    <td><a href="{% url 'remove-user' seller.id %}" class="btn btn-danger font-weight-bold">X</a></td>
                 </tr>
 
                 {% endfor %}

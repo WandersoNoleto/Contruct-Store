@@ -5,7 +5,7 @@ class Category(models.Model):
     title = models.CharField(max_length=45)
 
     def __str__(self) -> str:
-        return self.titulo
+        return self.title
 
 
 class Product(models.Model):
@@ -28,4 +28,9 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
+
+class Image(models.Model):
+    image   = models.ImageField(upload_to="image_product")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
