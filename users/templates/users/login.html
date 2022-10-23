@@ -1,5 +1,7 @@
 {% extends 'global/base.html' %}
 
+{% block title %}Login | ConstructStore{% endblock title %}
+
 {% block content %}
     <div class="container">
         <form action="{% url 'login' %}" method="POST">
