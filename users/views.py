@@ -11,17 +11,21 @@ from users.models import Users
 def cadastrar_vendedor(request):
     if request.method == "GET":
         sellers = Users.objects.filter(position="V")
-        
-        return render(request, 'users/register_seller.html', {'sellers': sellers})
+
+        context = {
+            'seller': sellers,
+        }
+
+        return render(request, 'users/register_seller.html', context)
 
 
     if request.method == "POST":
         name = request.POST.get('name')
         last_name = request.POST.get('last-name')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        email     = request.POST.get('email')
+        password  = request.POST.get('password')
 
-        user = Users.objects.filter(email=email)
+        user = Users.objects.filter(email = email)
 
         if user.exists():
             # TODO: Utilizar Messages do Django
@@ -47,10 +51,13 @@ def login(request):
         return render(request, 'users/login.html')
     
     elif request.method == "POST":
-        email = request.POST.get('email')
+        email    = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = auth.authenticate(username=email, password=password)
+        user = auth.authenticate(
+            username = email, 
+            password = password
+            )
 
         if not user:
             #TODO: Redirecionar com mensagem de erro

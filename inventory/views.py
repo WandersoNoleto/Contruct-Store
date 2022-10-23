@@ -13,7 +13,11 @@ def add_product(request):
     if request.method == "GET":
         categories = Category.objects.all()
 
-        return render(request, 'add_product.html', {'categories': categories})
+        context = {
+            'categories': categories,
+        }
+
+        return render(request, 'add_product.html', context)
 
     elif request.method == "POST":
         name     = request.POST.get('name')
